@@ -1,4 +1,4 @@
-// Simple Tic Tac Toe Program
+//Classic Tic Tac Toe Program -- Jayen Lare
 
 #include <iostream>
 #include <vector>
@@ -8,6 +8,7 @@
 
 using namespace std;
 
+//Receives a 2D array and displays updated tic tac toe board 
 void displayBoard(char b[3][3]){
     int x = 0;
     int y = 0;
@@ -33,6 +34,7 @@ void displayBoard(char b[3][3]){
     cout << endl;
 }
 
+//Displays a menu of all position on the board
 void menu(){
     cout << endl;
     cout << "---------MENU--------" << endl;
@@ -48,6 +50,7 @@ void menu(){
     cout << "Enter your choice: ";
 }
 
+//Checks if either player has gotten three in a row
 bool winner(vector<int> v){
     if((find(v.begin(), v.end(), 1) != v.end() && 
         find(v.begin(), v.end(), 2) != v.end() && 
@@ -80,6 +83,7 @@ bool winner(vector<int> v){
     }
 }
 
+//Converts a 1-9 position to a 2D grid coordinate
 pair<int, int> index(int pos){
     pair<int, int> i;
     switch (pos){
@@ -108,15 +112,16 @@ pair<int, int> index(int pos){
 
 int main(){
     //Variables
-    int players;
-    char xo;
-    int position;
-    bool xoFlag = true;
-    bool locFlag = false;
-    bool gameOver = false;
-    vector<int> prevMoves;
-    vector<int> xMoves;
-    vector<int> oMoves;
+    int players;            //Number of players
+    char xo;                //Player playing as 'X' or 'O'
+    int position;           //Position player selected
+    bool xoFlag = true;     //Checks that player entered either 'X' or 'O'
+    bool posFlag = false;   //Checks that postion entered is valid
+    bool gameOver = false;  //Checks if game is over
+    vector<int> prevMoves;  //Tracks all previous moves
+    vector<int> xMoves;     //Tracks all 'X' previous moves
+    vector<int> oMoves;     //Tracks all 'X' previous moves
+    //2D array containing positions already taken
     char board[3][3] = {{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
 
     //Starting the game - Selecting amount of players 
@@ -154,17 +159,18 @@ int main(){
 
             //Read in and display the moves starting with X
             for(int i = 0; i < 9; i++){
+                //Computers selects a random unoccupied position on the board
                 if(i % 2 != 0){
                     do{
                         srand(time(0));
                         position = (rand() % 9) + 1;
-                        locFlag = false;
+                        posFlag = false;
                         for(int i = 0; i < prevMoves.size(); i++){
                             if(position == prevMoves[i]){
-                                locFlag = true;
+                                posFlag = true;
                             }
                         }
-                    }while(locFlag == true);
+                    }while(posFlag == true);
                     prevMoves.push_back(position);
                     oMoves.push_back(position);
                     cout << "Computer placed O at position: " << position << endl;
@@ -173,22 +179,23 @@ int main(){
                 }
                 else{
                     menu();
+                    //Player selects an unoccupied position on the board
                     do{
                         cin >> position;
-                        locFlag = false;
+                        posFlag = false;
                         if(position < 1 || position > 9){
                             cout << "Invalid position..." << endl;
                             cout << "Please pick again" << endl;
-                            locFlag = true;
+                            posFlag = true;
                         }
                         for(int i = 0; i < prevMoves.size(); i++){
                             if(position == prevMoves[i]){
                                 cout << "This position has already been taken..." << endl;
                                 cout << "Please pick again" << endl;
-                                locFlag = true;
+                                posFlag = true;
                             }
                         }
-                    }while(locFlag == true);
+                    }while(posFlag == true);
                     prevMoves.push_back(position);
                     xMoves.push_back(position);
                     cout << "Placed X at position: " << position << endl;
@@ -207,7 +214,6 @@ int main(){
                     break;
                 }
             }
-
             //Game has no winner
             if(gameOver == false){
                 cout << "Game Over... It is a draw!" << endl;
@@ -218,16 +224,17 @@ int main(){
             //Read in and display the moves starting with O
             for(int i = 0; i < 9; i++){
                 if(i % 2 == 0){
+                    // Computers selects a random unoccupied position on the board
                     do{
                         srand(time(0));
                         position = (rand() % 9) + 1;
-                        locFlag = false;
+                        posFlag = false;
                         for(int i = 0; i < prevMoves.size(); i++){
                             if(position == prevMoves[i]){
-                                locFlag = true;
+                                posFlag = true;
                             }
                         }
-                    }while(locFlag == true);
+                    }while(posFlag == true);
                     prevMoves.push_back(position);
                     xMoves.push_back(position);
                     cout << "Computer placed X at position: " << position << endl;
@@ -236,22 +243,23 @@ int main(){
                 }
                 else{
                     menu();
+                    //Player selects an unoccupied position on the board
                     do{
                         cin >> position;
-                        locFlag = false;
+                        posFlag = false;
                         if(position < 1 || position > 9){
                             cout << "Invalid position..." << endl;
                             cout << "Please pick again" << endl;
-                            locFlag = true;
+                            posFlag = true;
                         }
                         for(int i = 0; i < prevMoves.size(); i++){
                             if(position == prevMoves[i]){
                                 cout << "This position has already been taken..." << endl;
                                 cout << "Please pick again" << endl;
-                                locFlag = true;
+                                posFlag = true;
                             }
                         }
-                    }while(locFlag == true);
+                    }while(posFlag == true);
                     prevMoves.push_back(position);
                     oMoves.push_back(position);
                     cout << "Placed O at position: " << position << endl;
@@ -270,7 +278,6 @@ int main(){
                     break;
                 }
             }
-
             //Game has no winner
             if(gameOver == false){
                 cout << "Game Over... It is a draw!" << endl;
@@ -291,22 +298,23 @@ int main(){
         for(int i = 0; i < 9; i++){
             menu();
             if(i % 2 == 0){
+                //Player 1 selects an unoccupied position on the board
                 do{
                     cin >> position;
-                    locFlag = false;
+                    posFlag = false;
                     if(position < 1 || position > 9){
                         cout << "Invalid position..." << endl;
                         cout << "Please pick again" << endl;
-                        locFlag = true;
+                        posFlag = true;
                     }
                     for(int i = 0; i < prevMoves.size(); i++){
                         if(position == prevMoves[i]){
                             cout << "This position has already been taken..." << endl;
                             cout << "Please pick again" << endl;
-                            locFlag = true;
+                            posFlag = true;
                         }
                     }
-                }while(locFlag == true);
+                }while(posFlag == true);
                 prevMoves.push_back(position);
                 xMoves.push_back(position);
                 cout << "Placed X at position: " << position << endl;
@@ -314,22 +322,23 @@ int main(){
                 displayBoard(board);
             }
             else{
+                //Player 2 selects an unoccupied position on the board
                 do{
                     cin >> position;
-                    locFlag = false;
+                    posFlag = false;
                     if(position < 1 || position > 9){
                         cout << "Invalid position..." << endl;
                         cout << "Please pick again" << endl;
-                        locFlag = true;
+                        posFlag = true;
                     }
                     for(int i = 0; i < prevMoves.size(); i++){
                         if(position == prevMoves[i]){
                             cout << "This position has already been taken..." << endl;
                             cout << "Please pick again" << endl;
-                            locFlag = true;
+                            posFlag = true;
                         }
                     }
-                }while(locFlag == true);
+                }while(posFlag == true);
                 prevMoves.push_back(position);
                 oMoves.push_back(position);
                 cout << "Placed O at position: " << position << endl;
@@ -348,7 +357,6 @@ int main(){
                 break;
             }
         }
-
         //Game has no winner
         if(gameOver == false){
             cout << "Game Over... It is a draw!" << endl;
