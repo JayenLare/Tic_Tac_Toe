@@ -13,7 +13,7 @@ This program is written in C++ and allows either 1 player or 2 players to play T
     ```sh
     cd Tic_Tac_Toe
     ```
-3. Run the program:
+3. Run the executable:
     ```sh
     ./ticTacToe 
     ```
